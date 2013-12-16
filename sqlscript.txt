@@ -1,0 +1,8 @@
+CREATE TABLE IF NOT EXISTS `seller` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `username` varchar(30) DEFAULT NULL,
+  `passcode` varchar(30) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `username` (`username`)
+)
+
