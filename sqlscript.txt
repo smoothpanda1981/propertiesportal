@@ -1,8 +1,130 @@
+-- phpMyAdmin SQL Dump
+-- version 4.0.9
+-- http://www.phpmyadmin.net
+--
+-- Host: localhost
+-- Generation Time: Dec 17, 2013 at 09:44 AM
+-- Server version: 5.6.14
+-- PHP Version: 5.5.6
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+
+--
+-- Database: `properties_portal`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `property`
+--
+
+CREATE TABLE IF NOT EXISTS `property` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `address` varchar(256) DEFAULT NULL,
+  `price` int(11) DEFAULT NULL,
+  `bedroom` int(11) DEFAULT NULL,
+  `bathroom` int(11) DEFAULT NULL,
+  `property_type` varchar(256) DEFAULT NULL,
+  `land_size` float DEFAULT NULL,
+  `building_type` varchar(256) DEFAULT NULL,
+  `build_in` date DEFAULT NULL,
+  `title` varchar(256) DEFAULT NULL,
+  `total_parking_spaces` int(11) DEFAULT NULL,
+  `description` text,
+  `appliances_included` varchar(256) DEFAULT NULL,
+  `features` varchar(256) DEFAULT NULL,
+  `view` varchar(256) DEFAULT NULL,
+  `structures` varchar(256) DEFAULT NULL,
+  `zoning_id` varchar(256) DEFAULT NULL,
+  `fire_place` float DEFAULT NULL,
+  `floor_space` double DEFAULT NULL,
+  `realtor_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `realtor_id` (`realtor_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
+
+--
+-- Dumping data for table `property`
+--
+
+INSERT INTO `property` (`id`, `address`, `price`, `bedroom`, `bathroom`, `property_type`, `land_size`, `building_type`, `build_in`, `title`, `total_parking_spaces`, `description`, `appliances_included`, `features`, `view`, `structures`, `zoning_id`, `fire_place`, `floor_space`, `realtor_id`) VALUES
+(1, '401-9776 Fourth St, Sidney, British Columbia   V8L2Z1', 634900, 2, 3, 'Single Family', 0, 'Apartment', '2012-03-02', 'Condominium/Strata', 1, 'Open Tuesdays thru Saturdays 1:00 - 3:00. THE UPGRADES in this Unit Must be seen; Too Many To Mention but include a PRIVATE WORKSHOP, PRIVATE HEAT PUMP & a Wine Fridge. This is one of Four New Two Bedroom and Den Units available in a Nine Unit Development constructed by Roger Garside Construction in Downtown Sidney. Close to all amenities and a short walk to Ocean Front. Designer finishes including Wood Cabinets, Granite Counter Tops, Wood & Tile Flooring, Walk In Tiled Showers in Ensuite, Heated Tiled Floors in Bathrooms & Crown Moldings. Price includes Secure Parking, Separate Storage and Bicycle/Scooter Storage and NET G.S.T with rebate to seller. LET''S MAKE A DEAL ... CALL ROSS SHORTREED 250 858 3585 or DON KING 250 516 1202', 'Sauna', 'Level lot', 'View of water, City view', 'Workshop', 'Residential/Commercial', 1, 120.1236, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `realtor`
+--
+
+CREATE TABLE IF NOT EXISTS `realtor` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `company_name` varchar(256) DEFAULT NULL,
+  `company_address` varchar(256) DEFAULT NULL,
+  `email` varchar(256) DEFAULT NULL,
+  `website_url` text,
+  `seller_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `seller_id` (`seller_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+
+--
+-- Dumping data for table `realtor`
+--
+
+INSERT INTO `realtor` (`id`, `company_name`, `company_address`, `email`, `website_url`, `seller_id`) VALUES
+(1, 'ACD Systems International Inc.', '1335 Bear Mountain Pkwy #129, Victoria, British Columbia V9B 6T9', 'support@acdsystems.com', 'http://www.acdsee.com', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `seller`
+--
+
 CREATE TABLE IF NOT EXISTS `seller` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(30) DEFAULT NULL,
   `passcode` varchar(30) DEFAULT NULL,
+  `firstname` varchar(256) DEFAULT NULL,
+  `lastname` varchar(256) DEFAULT NULL,
+  `email` varchar(256) DEFAULT NULL,
+  `phone` varchar(256) DEFAULT NULL,
+  `fax` varchar(256) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `username` (`username`)
-)
+  UNIQUE KEY `username` (`username`),
+  KEY `id` (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 
+--
+-- Dumping data for table `seller`
+--
+
+INSERT INTO `seller` (`id`, `username`, `passcode`, `firstname`, `lastname`, `email`, `phone`, `fax`) VALUES
+(1, 'ywang', 'test1234', 'yan', 'wang', 'ywang@acdsystems.com', '250-891-3895', '');
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `property`
+--
+ALTER TABLE `property`
+  ADD CONSTRAINT `property_ibfk_1` FOREIGN KEY (`realtor_id`) REFERENCES `realtor` (`id`);
+
+--
+-- Constraints for table `realtor`
+--
+ALTER TABLE `realtor`
+  ADD CONSTRAINT `realtor_ibfk_1` FOREIGN KEY (`seller_id`) REFERENCES `seller` (`id`);
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
